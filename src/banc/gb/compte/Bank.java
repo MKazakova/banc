@@ -1,15 +1,15 @@
-package banc.gb.compte;
+package Bank.gb.compte;
 
 import java.io.*;
 
-public class Banc {
+public class Bank {
     private Account[] clients = {new Account(150, 100, "Maria", "pass"),
                 new Account(150, 100, "Toto", "123")};
 
-    public Banc() {
+    public Bank() {
 
     }
-    public Banc(String fileName) throws IOException {
+    public Bank(String fileName) throws IOException {
         initilizeClients(fileName);
     }
 
