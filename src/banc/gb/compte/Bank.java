@@ -1,4 +1,4 @@
-package Bank.gb.compte;
+package banc.gb.compte;
 
 import java.io.*;
 
