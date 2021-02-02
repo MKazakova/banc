@@ -1,10 +1,13 @@
 package banc.gb.compte;
 
 import java.io.*;
+import java.util.Map;
 
 public class Bank {
-    private Account[] clients = {new Account(150, 100, "Maria", "pass"),
-                new Account(150, 100, "Toto", "123")};
+    private Map<String, Account> clients =
+                Map.ofEntries(
+                Map.entry("Maria", new Account(150, 100, "Maria", "pass")),
+                        Map.entry("Toto", new Account(150, 100, "Toto", "123")));
 
     public Bank() {
 
@@ -20,13 +23,14 @@ public class Bank {
         try {
             fis = new FileInputStream(fileObject);
             ois = new ObjectInputStream(fis);
-
+            clients = (Map)ois.readObject();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
             if(fis!=null){
                 fis.close();
             }
@@ -37,10 +41,9 @@ public class Bank {
     }
 
     public Account getAccount(String identifiant, String code) {
-        for(Account account: clients){
-            if(account.getIdentifiantClient().equals(identifiant) && account.getCode().equals(code)){
-                return account;
-            }
+        Account account = clients.get(identifiant);
+        if(account.getCode().equals((code))){
+            return account;
         }
         return null;
     }
@@ -50,7 +53,7 @@ public class Bank {
     }
 
     public void saveData() {
-        File fileObject = new File("clients");
+        File fileObject = new File("clientsMap");
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileObject))){
             int x = 5;
             oos.writeObject(clients);
