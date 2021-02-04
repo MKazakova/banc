@@ -2,7 +2,7 @@ package banc.gb.compte;
 
 public class Main {
 
-    public static void main(String... args) throws PositifCreditException, NegatifDebitException {
+    public static void main(String... args) throws ImpossibleOperationException, NegatifSumException {
         Bank bank = new Bank();
         Account compte = bank.getAccount("Maria", "pass");
         compte.debit(150);
